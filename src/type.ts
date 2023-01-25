@@ -8,7 +8,7 @@ export type TProduct = {
     id: string
     name: string
     price: number
-    category: string
+    category: "ELECTRONICS" | "CLOTHES_AND_SHOES" | "ACCESSORIES"
 }
 
 export type TPurchase = {
@@ -17,3 +17,9 @@ export type TPurchase = {
     quatily: number
     totalPrice: number
 }
+
+ export enum CATEGORY_PRODUCT{
+    ELECTRONICS = "ELECTRONICS",
+    CLOTHES_AND_SHOES = "CLOTHES_AND_SHOES",
+    ACCESSORIES = "ACCESSORIES"    
+ }

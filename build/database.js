@@ -1,44 +1,51 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.purchase = exports.products = exports.users = void 0;
+const type_1 = require("./type");
 exports.users = [
     {
-        id: "2r4g5j7t8k9y8n6r4g",
+        id: "01",
         email: "teste1@teste1.com",
         password: "12345"
     },
     {
-        id: "2r4g5j7t8k",
+        id: "02",
         email: "teste2@teste2.com",
         password: "1234578"
     }
 ];
 exports.products = [
     {
-        id: "e2r3r4y485i6o6",
+        id: "01",
         name: "Phone",
         price: 75,
-        category: "Eletronic"
+        category: type_1.Role.ACCESSORIES
     },
     {
-        id: "r4r67t8u9i",
+        id: "02",
         name: "Mouse",
         price: 45,
-        category: "Eletronic"
+        category: type_1.Role.ACCESSORIES
     }
 ];
 exports.purchase = [
     {
-        userld: "2r4g5j7t8k9y8n6r4g",
-        productld: "e2r3r4y485i6o6",
+        userld: "01",
+        productld: "01",
         quatily: 2,
         totalPrice: 150
     },
     {
-        userld: "2r4g5j7t8k",
-        productld: "r4r67t8u9i",
+        userld: "02",
+        productld: "02",
         quatily: 2,
         totalPrice: 90
     }
 ];
+function createUser(id, email, password) {
+    const user = { id, email, password };
+    exports.users.push(user);
+    console.log(`O usuário ${id} com o email ${email} foi cadastrado com sucesso`);
+}
+createUser("r004", "rafaela", "rafa@teste.com");
 //# sourceMappingURL=database.js.map
