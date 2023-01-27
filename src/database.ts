@@ -32,15 +32,15 @@ export const products: TProduct[] = [
 
 export const purchases: TPurchase[] = [
     {
-        userld: "01",
-        productld: "01",
+        userId: "01",
+        productId: "01",
         quatily: 2,
         totalPrice: 150
 
     },
     {
-        userld: "02",
-        productld: "02",
+        userId: "02",
+        productId: "02",
         quatily: 2,
         totalPrice: 90
     }
@@ -99,8 +99,8 @@ function queryProductsByName(q: string): Array<TProduct> {
 console.table (queryProductsByName)
 
 
-function createPurchase (userld: string, productld: string, quatily: number, totalPrice: number): void{
-    const purchase: TPurchase = {userld, productld, quatily, totalPrice}
+function createPurchase (userId: string, productId: string, quatily: number, totalPrice: number): void{
+    const purchase: TPurchase = {userId, productId, quatily, totalPrice}
     purchases.push(purchase)
    
 }
@@ -111,7 +111,7 @@ createPurchase("u001", "p005", 2, 900)
 
 function getAllPurchasesFromUserId (userIdToSearch: string): Array<TPurchase>{
     return purchases.filter((purchase)=> {
-        return purchase.userld.includes(userIdToSearch)
+        return purchase.userId.includes(userIdToSearch)
     })
 }
 
