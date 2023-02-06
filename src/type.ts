@@ -14,6 +14,7 @@ export type TProduct = {
 export type TPurchase = {
     userId: string
     productId: string
+    price: number
     quatily: number
     totalPrice: number
 }
