@@ -124,4 +124,38 @@ ORDER BY price ASC;
 
 SELECT * FROM products
 WHERE price >800.0 OR price <300.0
-ORDER BY price ASC;
+ORDER BY price ASC; 
+
+CREATE TABLE table_purchase (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    total_price REAL NOT NULL,
+    paid INTEGER NOT NULL,
+    delivered_at TEXT,
+    buyer_id TEXT NOT NULL,
+    Foreign Key (buyer_id) REFERENCES users(id)
+);
+
+SELECT * FROM table_purchase;
+
+SELECT * FROM users;
+
+SELECT * FROM products;
+
+INSERT INTO table_purchase (id, total_price, paid, buyer_id)
+VALUES ("p001",300, 30, "03" );
+
+INSERT INTO table_purchase (id, total_price, paid, buyer_id)
+VALUES ("p002", 200, 0, "05"),
+("p003", 100, 1, "04"),
+("p004", 50, 1, "04"),
+("p005", 80, 0, "05"),
+("p006", 700, 1, "06");
+
+UPDATE table_purchase
+ SET delivered_at = datetime ('now', 'localtime')
+WHERE id = 05;
+
+-- junção das tabelas A e B (tabela A: table_purchase) (tabela B: users) on chave estrageira = chave primaria:
+SELECT * FROM table_purchase
+INNER JOIN users
+ON table_purchase.buyer_id = users.id;
