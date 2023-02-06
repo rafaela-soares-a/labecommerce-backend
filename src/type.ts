@@ -8,7 +8,7 @@ export type TProduct = {
     id: string
     name: string
     price: number
-    category: "ELECTRONICS" | "CLOTHES_AND_SHOES" | "ACCESSORIES"
+    category: "ELECTRONICS" | "DOMESTIC_APPLIANCES" | "ACCESSORIES"
 }
 
 export type TPurchase = {
@@ -21,6 +21,6 @@ export type TPurchase = {
 
  export enum CATEGORY_PRODUCT{
     ELECTRONICS = "ELECTRONICS",
-    CLOTHES_AND_SHOES = "CLOTHES_AND_SHOES",
+    DOMESTIC_APPLIANCES = "DOMESTIC_APPLIANCES",
     ACCESSORIES = "ACCESSORIES"    
  }
