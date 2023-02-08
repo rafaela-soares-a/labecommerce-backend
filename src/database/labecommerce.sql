@@ -159,3 +159,30 @@ WHERE id = 05;
 SELECT * FROM purchases
 INNER JOIN users
 ON purchases.buyer_id = users.id;
+
+-- Agora que sabemos como criar relações m:n, é possível implementar a tabela de relações entre produtos e pedidos.
+-- Criação da tabela de relações
+
+CREATE TABLE purchase_products (
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantify INTEGER NOT NULL,
+    Foreign Key (purchase_id) REFERENCES purchases(id),
+    Foreign Key (product_id) REFERENCES products(id)
+);
+
+INSERT INTO purchase_products (purchase_id, product_id, quantify)
+VALUES ("p002", "03", 4);
+
+INSERT INTO purchase_products (purchase_id, product_id, quantify)
+VALUES ("p003", "04", 2), 
+("p004", "05", 1), 
+("p005", "06", 3);
+
+SELECT * FROM purchase_products;
+
+SELECT * FROM purchase_products
+INNER JOIN purchases
+ON purchase_products.purchase_id = purchases.id
+INNER JOIN products
+ON purchase_products.product_id = products.id;
