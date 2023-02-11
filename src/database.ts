@@ -54,7 +54,7 @@ function createUser(id: string, email: string, password: string): void {
     console.log(`O usuário ${id} com o email ${email} foi cadastrado com sucesso`)
 }
 
-createUser("r004", "rafaela", "rafa@teste.com");
+// createUser("r004", "rafaela", "rafa@teste.com");
 
 function getAllUsers(): void {
     users.map((user) => {
