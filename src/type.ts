@@ -19,7 +19,7 @@ export type TPurchase = {
     totalPrice: number
 }
 
- export enum CATEGORY_PRODUCT{
+ export enum CATEGORY_PRODUCT {
     ELECTRONICS = "ELECTRONICS",
     DOMESTIC_APPLIANCES = "DOMESTIC_APPLIANCES",
     ACCESSORIES = "ACCESSORIES"    
