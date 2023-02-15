@@ -13,7 +13,9 @@ app.listen(3003, () => {
     console.log("Servidor rodando na porta 3003");
 });
 
-app.get("/ping", async  (req: Request, res: Response) => {
+//teste de conexão
+
+app.get("/ping", async (req: Request, res: Response) => {
     try {
         res.status(200).send("Pong!")
     } catch (error) {
@@ -34,10 +36,13 @@ app.get("/ping", async  (req: Request, res: Response) => {
 // busca todos os usuários
 app.get('/users', async (req: Request, res: Response) => {
     try {
-        const result = await db.raw (`
-        SELECT * FROM users
-        `)
-        res.status(200).send({users: result})
+        // const result = await db.raw (`
+        // SELECT * FROM users
+        // `)
+
+        const result = await db("users")
+
+        res.status(200).send({ users: result })
         // res.status(200).send(users)
 
 
@@ -56,14 +61,16 @@ app.get('/users', async (req: Request, res: Response) => {
 });
 
 // busca todos os produtos
-app.get('/products', async (req: Request, res: Response) =>{
-    try { 
+app.get('/products', async (req: Request, res: Response) => {
+    try {
 
-        const result = await db.raw (`
-            SELECT * FROM products
-        `)
+        // const result = await db.raw (`
+        //     SELECT * FROM products
+        // `)
 
-        res.status(200).send({products: result})
+        const result = await db("products")
+
+        res.status(200).send({ products: result })
 
     } catch (error) {
         console.log(error)
@@ -78,27 +85,40 @@ app.get('/products', async (req: Request, res: Response) =>{
     }
 });
 
+app.get('/purchases', async (req: Request, res: Response) => {
+    try {
+
+        const result = await db("purchases")
+        res.status(200).send({ purchases: result })
+
+    } catch (error) {
+        console.log(error)
+
+        if (res.statusCode === 200) {
+            res.status(500)
+        }
+
+        if (error instanceof Error) {
+            res.send(error.message)
+        }
+    }
+});
+
+//--------------------------------------
+
 // busca os produtos pelo nome
 app.get('/product/search', async (req: Request, res: Response) => {
     try {
         const q = req.query.q as string
 
-        // if(q.length <= 1){
-        //     res.status(400)
-        //     throw new Error("'Name' deve possuir mais de um caracter");
-            
-        // }
-
-        const result = products.filter((product) => {
-            return product.name.toLocaleLowerCase().includes(q)
-        })
-
-        if (!result) {
-            res.status(404) //res.statuscode = 404 (duas formas de serem feitos)
-            throw new Error("Produto não encontrado, verifique o nome informado")
+        if (q.length <= 1) {
+            res.status(400)
+            throw new Error("Name deve possuir mais de um caracter");
         }
 
-        res.status(200).send(result)
+        const [products] = await db("products").where({ name: q })
+
+        res.status(200).send({ products: products })
 
     } catch (error) {
         console.log(error)
@@ -120,6 +140,7 @@ app.get('/product/search', async (req: Request, res: Response) => {
 app.post('/users', async (req: Request, res: Response) => {
 
     try {
+        
         const id = req.body.id as string
         const email = req.body.email as string
         const password = req.body.password as string
@@ -289,6 +310,38 @@ app.get('/products/:id', async (req: Request, res: Response) => {
 
 });
 
+app.get ('/purchase/id', async (req: Request, res: Response) => {
+
+    try {
+        const userId = req.params.userId
+    
+      const searchById = purchases.find((purchase)=> purchase.userId === userId)
+
+      if (!searchById) {
+        res.status(400)
+        throw new Error("Id do produto inválido")
+    }
+
+
+    res.status(200).send(searchById)
+
+        
+    } catch (error) {
+        console.log(error)
+
+        if (res.statusCode === 200) {
+            res.status(500)
+        }
+
+        if (error instanceof Error) {
+            res.send(error.message)
+        } else {
+            res.send("Erro inesperado")
+        }
+    }
+
+});
+
 // buscar compra pelo id do usuário:
 app.get('/users/:id/purchases', async (req: Request, res: Response) => {
 
@@ -339,7 +392,7 @@ app.delete('/users/:id', async (req: Request, res: Response) => {
                 WHERE id = "${id}"
     `)
 
-    res.status(200).send({ message: "User deletado com sucesso"})
+        res.status(200).send({ message: "User deletado com sucesso" })
 
         // const indexToRemove = users.findIndex((user) => user.id === id)
 
